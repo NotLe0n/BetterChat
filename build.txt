@@ -1,0 +1,8 @@
+displayName = Better Chat
+author = NotLe0n
+version = 0.1
+hideCode = false
+hideResources = false
+includeSource = false
+buildIgnore = vs/*, *.csproj, *.sln, *.pidb, *.userprefs, *.user, obj/*, bin/*
+homepage = https://discord.gg/NX4DVzz2v6
