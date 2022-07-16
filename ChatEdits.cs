@@ -142,9 +142,9 @@ internal class ChatEdits : ModSystem
 		return newKeys;
 	}
 
-	private static Assembly tModAssembly = Assembly.GetAssembly(typeof(ModLoader));
-	private static MethodInfo __HandleCommand = typeof(CommandLoader).GetMethod("HandleCommand", BindingFlags.NonPublic | BindingFlags.Static);
-	private static ConstructorInfo __ChatCommandCaller_ctor = tModAssembly.GetType("Terraria.ModLoader.ChatCommandCaller", true).GetConstructor(Type.EmptyTypes);
+	private static readonly Assembly tModAssembly = Assembly.GetAssembly(typeof(ModLoader));
+	private static readonly MethodInfo __HandleCommand = typeof(CommandLoader).GetMethod("HandleCommand", BindingFlags.NonPublic | BindingFlags.Static);
+	private static readonly Type __ChatCommandCaller = tModAssembly.GetType("Terraria.ModLoader.ChatCommandCaller");
 
 	public static Color chatCursorColor = Color.White; // new!
 	public static bool chatFocus = true; // new!
@@ -216,7 +216,7 @@ internal class ChatEdits : ModSystem
 			return;
 		}
 
-		var handled = Main.chatText.Length > 0 && Main.chatText[0] == '/' && (bool)__HandleCommand.Invoke(null, new object[] { Main.chatText, __ChatCommandCaller_ctor.Invoke(null, null) });
+		var handled = Main.chatText.Length > 0 && Main.chatText[0] == '/' && (bool)__HandleCommand.Invoke(null, new object[] { Main.chatText, Activator.CreateInstance(__ChatCommandCaller, true) });
 		if (Main.chatText != "" && !handled) {
 			ChatMessage message = ChatManager.Commands.CreateOutgoingMessage(Main.chatText);
 			if (Main.netMode == NetmodeID.MultiplayerClient)
