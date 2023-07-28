@@ -99,10 +99,10 @@ internal class BetterChatUI : UIState
 		var colorWheel = new UIColorWheel(colorWheelRadius);
 		colorPanel.Append(colorWheel);
 
-		float CalcTextScale(string t, int w) => w / FontAssets.MouseText.Value.MeasureString(t).X;
+		float CalcTextScale(string t, int w) => (2*w) / FontAssets.MouseText.Value.MeasureString(t).X;
 
 		string applyText = Language.GetTextValue("Mods.BetterChat.ApplyTag");
-		var applyButton = new UITextPanel<string>(applyText, CalcTextScale(applyText, 10)) {
+		var applyButton = new UITextPanel<string>(applyText, CalcTextScale(applyText, 19)) {
 			Left = new(0, 0),
 			Top = new(-25, 1),
 			Width = new(10, 0),
@@ -113,8 +113,8 @@ internal class BetterChatUI : UIState
 		colorPanel.Append(applyButton);
 
 		string resetText = Language.GetTextValue("Mods.BetterChat.Reset");
-		var resetButton = new UITextPanel<string>(resetText, CalcTextScale(resetText, 10)) {
-			Left = new(0, 0.4f),
+		var resetButton = new UITextPanel<string>(resetText, CalcTextScale(resetText, 19)) {
+			Left = new(0, 0.35f),
 			Top = new(-25, 1),
 			Width = new(10, 0),
 			Height = new(5, 0)
@@ -124,10 +124,10 @@ internal class BetterChatUI : UIState
 		colorPanel.Append(resetButton);
 
 		string closeText = Language.GetTextValue("Mods.BetterChat.CloseTag");
-		var endButton = new UITextPanel<string>(closeText, CalcTextScale(closeText, 20)) {
-			Left = new(-50, 1),
+		var endButton = new UITextPanel<string>(closeText, CalcTextScale(closeText, 19)) {
+			Left = new(0, 0.7f),
 			Top = new(-25, 1),
-			Width = new(20, 0),
+			Width = new(10, 0),
 			Height = new(5, 0)
 		};
 		endButton.SetPadding(9);
