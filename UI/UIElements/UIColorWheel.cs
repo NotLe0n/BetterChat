@@ -1,10 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Terraria;
-using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
 using Terraria.UI;
 
@@ -12,11 +9,11 @@ namespace BetterChat.UI.UIElements;
 
 internal class UIColorWheel : UIElement
 {
+	public Color SelectedColor { get; private set; }
+	private Vector2 selectedPosition;
+
 	private readonly int diameter;
 	private readonly int blackEndDiameter;
-
-	private Vector2 selectedPosition;
-	public Color SelectedColor { get; private set; }
 
 	public UIColorWheel(int diameter)
 	{
@@ -31,7 +28,13 @@ internal class UIColorWheel : UIElement
 		SelectedColor = Color.White;
 	}
 
-	public Color? GetColor(int x, int y)
+	public void Reset()
+	{
+		selectedPosition = new Vector2(diameter/2f);
+		SelectedColor = Color.White;
+	}
+
+	private Color? GetColor(int x, int y)
 	{
 		int distsq = x * x + y * y;
 
@@ -69,7 +72,7 @@ internal class UIColorWheel : UIElement
 		}
 
 		int radius = diameter / 2;
-		var distCent = Vector2.Distance(Main.MouseScreen, GetDimensions().Center());
+		float distCent = Vector2.Distance(Main.MouseScreen, GetDimensions().Center());
 		if (distCent >= radius) {
 			return; // return if mouse is outside of circle
 		}
@@ -95,7 +98,7 @@ internal class UIColorWheel : UIElement
 		base.Draw(spriteBatch);
 		var rect = GetDimensions().ToRectangle();
 
-		// draw clolor circle
+		// draw color circle
 		spriteBatch.Draw(CreateCircle(), rect, Color.White * (IsMouseHovering ? 1 : 0.4f));
 
 		// draw selector
@@ -118,7 +121,8 @@ internal class UIColorWheel : UIElement
 					int sy = y + diameter;
 					int index = sy * outerRadius + sx + 1; // get array index
 
-					data[index] = GetColor(x, y).Value; // set pixel at the index to the color
+					// set pixel at the index to the color
+					data[index] = GetColor(x, y) ?? Color.Transparent;
 				}
 			}
 		}

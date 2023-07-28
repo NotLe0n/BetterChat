@@ -23,16 +23,16 @@ internal class ChatEdits : ModSystem
 	{
 		base.Load();
 
-		On.Terraria.Main.GetInputText += Main_GetInputText;
-		On.Terraria.Main.DrawPlayerChat += Main_DrawPlayerChat;
-		On.Terraria.Main.DoUpdate_HandleChat += Main_DoUpdate_HandleChat;
+		On_Main.GetInputText += Main_GetInputText;
+		On_Main.DrawPlayerChat += Main_DrawPlayerChat;
+		On_Main.DoUpdate_HandleChat += Main_DoUpdate_HandleChat;
 	}
 
 	private static readonly FieldInfo __backSpaceRate = typeof(Main).GetField("backSpaceRate", BindingFlags.NonPublic | BindingFlags.Static);
 	private static readonly FieldInfo __backSpaceCount = typeof(Main).GetField("backSpaceCount", BindingFlags.NonPublic | BindingFlags.Static);
 
 	//private int cursorPosition;
-	private string Main_GetInputText(On.Terraria.Main.orig_GetInputText orig, string oldString, bool allowMultiLine)
+	private string Main_GetInputText(On_Main.orig_GetInputText orig, string oldString, bool allowMultiLine)
 	{
 		if (Main.dedServ)
 			return "";
@@ -148,7 +148,7 @@ internal class ChatEdits : ModSystem
 
 	public static Color chatCursorColor = Color.White; // new!
 	public static bool chatFocus = true; // new!
-	private void Main_DoUpdate_HandleChat(On.Terraria.Main.orig_DoUpdate_HandleChat orig)
+	private void Main_DoUpdate_HandleChat(On_Main.orig_DoUpdate_HandleChat orig)
 	{
 		// new!
 		if (!chatFocus)
@@ -231,7 +231,7 @@ internal class ChatEdits : ModSystem
 		SoundEngine.PlaySound(SoundID.MenuClose);
 	}
 
-	private void Main_DrawPlayerChat(On.Terraria.Main.orig_DrawPlayerChat orig, Main self)
+	private void Main_DrawPlayerChat(On_Main.orig_DrawPlayerChat orig, Main self)
 	{
 		TextSnippet[] array = null;
 		if (Main.drawingPlayerChat)
